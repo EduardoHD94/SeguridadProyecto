@@ -10,13 +10,13 @@
         <script>
         	$(function(){
         		$.ajax({
-        			url:"telefonos.php",
+        			url:"../include/automovil.php",
         			dataType:"json",
         			success:function(data)
                     {
         				$.each(data, function(index)
                         {
-                            $("#names").append("<li>"+/*data[index].Usuario+*/" "+data[index].Telefono+"</li>")
+                            $("#names").append("<li>"+data[index].NombreAutomovil+" $"+data[index].Precio+" "+data[index].Gama+" "+data[index].Imagen+"</li>")
 
         				});
         			}
