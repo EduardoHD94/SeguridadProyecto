@@ -34,6 +34,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!-- start-smoth-scrolling -->
 		<script type="text/javascript" src="js/move-top.js"></script>
 		<script type="text/javascript" src="js/easing.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script type="text/javascript">
 			jQuery(document).ready(function($) {
 				$(".scroll").click(function(event){		
@@ -42,6 +43,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				});
 			});
 		</script>
+		<script>
+        	$(function(){
+        		$.ajax({
+        			url:"../include/automovil.php",
+        			dataType:"json",
+        			success:function(data){
+        				$.each(data, function(index){
+                            $("#autos").append("<div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='"+data[index].Imagen+"' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreAutomovil+"</h3><p><strong>Precio:</strong> $"+data[index].Precio+"<br><strong>Gama: </strong>"+data[index].Gama+"</p></div></div>")
+        				});
+        			}
+        		});
+        	});
+        	$(function(){
+        		$.ajax({
+        			url:"../include/automovil.php",
+        			dataType:"json",
+        			success:function(data){
+        				$.each(data, function(index){
+                            $("#autos").append("<div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='"+data[index].Imagen+"' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreAutomovil+"</h3><p><strong>Precio:</strong> $"+data[index].Precio+"<br><strong>Gama: </strong>"+data[index].Gama+"</p></div></div>")
+        				});
+        			}
+        		});
+        	});
+        </script>
 		<!-- start-smoth-scrolling -->
 	</head>
 	<body>
@@ -225,7 +250,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<!-- container -->
 				<div class="container">
 					<div class="visiting-info">
-						<h3>VISITING PLACES</h3>
+						<h3>Hoteles</h3>
 					</div>
 					<div class="top-grids">
 						<div class="top-grid">
@@ -257,6 +282,98 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</div>
 						</div>
 						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<!-- //container -->
+			</div>
+			<div class="visiting">
+				<!-- container -->
+				<div class="container">
+					<div class="visiting-info">
+						<h3>Aviones</h3>
+					</div>
+					<div class="top-grids">
+						<div class="top-grid">
+							<img src="images/6.jpg" alt="">
+							<div class="top-grid-info visiting-grid">
+								<h3>Vestibulum auctor</h3>
+								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
+							</div>
+						</div>
+						<div class="top-grid">
+							<img src="images/3.jpg" alt="">
+							<div class="top-grid-info visiting-grid">
+								<h3>Vestibulum auctor</h3>
+								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
+							</div>
+						</div>
+						<div class="top-grid">
+							<img src="images/2.jpg" alt="">
+							<div class="top-grid-info visiting-grid">
+								<h3>Vestibulum auctor</h3>
+								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
+							</div>
+						</div>
+						<div class="top-grid">
+							<img src="images/4.jpg" alt="">
+							<div class="top-grid-info visiting-grid">
+								<h3>Vestibulum auctor</h3>
+								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
+							</div>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<!-- //container -->
+			</div>
+			<div class="visiting">
+				<!-- container -->
+				<div class="container">
+					<div class="visiting-info">
+						<h3>Barcos</h3>
+					</div>
+					<div class="top-grids">
+						<div class="top-grid">
+							<img src="images/6.jpg" alt="">
+							<div class="top-grid-info visiting-grid">
+								<h3>Vestibulum auctor</h3>
+								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
+							</div>
+						</div>
+						<div class="top-grid">
+							<img src="images/3.jpg" alt="">
+							<div class="top-grid-info visiting-grid">
+								<h3>Vestibulum auctor</h3>
+								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
+							</div>
+						</div>
+						<div class="top-grid">
+							<img src="images/2.jpg" alt="">
+							<div class="top-grid-info visiting-grid">
+								<h3>Vestibulum auctor</h3>
+								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
+							</div>
+						</div>
+						<div class="top-grid">
+							<img src="images/4.jpg" alt="">
+							<div class="top-grid-info visiting-grid">
+								<h3>Vestibulum auctor</h3>
+								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
+							</div>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<!-- //container -->
+			</div>
+			<div class="visiting">
+				<!-- container -->
+				<div class="container">
+					<div class="visiting-info">
+						<h3>Autos</h3>
+					</div>
+					<div class="top-grids" id="autos">
+						
 					</div>
 				</div>
 				<!-- //container -->
