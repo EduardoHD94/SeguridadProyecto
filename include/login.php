@@ -34,12 +34,13 @@
 		$_SESSION["idUsuario"] = $idUsuario;
 		$_SESSION["NombreCompleto"] = $NombreCompleto;
 		$_SESSION["Usuario"] = $Usuario;
-;
 		header('Location: ../html/inicio.php');
 
 		//echo "ID Usuario: " . $_SESSION["idUsuario"];
 		//$_SESSION["favanimal"] = "cat";
 		
+	}else{
+		header('Location: ../html/index.php');
 	}
 
 ?>
