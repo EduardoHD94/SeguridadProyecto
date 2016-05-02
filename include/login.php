@@ -32,7 +32,10 @@
 		echo $idUsuario." ".$NombreCompleto." ".$Usuario;
 		session_start();
 		$_SESSION["idUsuario"] = $idUsuario;
-
+		$_SESSION["NombreCompleto"] = $NombreCompleto;
+		$_SESSION["Usuario"] = $Usuario;
+;
+		header('Location: ../html/inicio.php');
 
 		//echo "ID Usuario: " . $_SESSION["idUsuario"];
 		//$_SESSION["favanimal"] = "cat";
