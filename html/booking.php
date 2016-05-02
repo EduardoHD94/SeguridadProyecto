@@ -6,6 +6,12 @@ session_start();
 	}
 	else
 	{
+	include('../include/Conexion.php');
+	$db = new Database();
+	$db->connect();
+	$db->sql("select Aerolinea.NombreAerolinea ,Aerolinea.Imagen, Aeropuerto.NombreAeropuerto,Tasa.Porcentaje, Ciudad.NombreCiudad, Categoria.NombreCategoria from AeroLineaPuerto,Aerolinea,Aeropuerto,Tasa, Categoria, Ciudad 
+where Aerolinea.idAerolinea = AeroLineaPuerto.idAerolinea and AeroLineaPuerto.idAeropuerto = Aeropuerto.idAeropuerto and Tasa.idTasa = Aeropuerto.idTasa and Categoria.idCategoria = Aeropuerto.idCategoria and Ciudad.idCiudad = Aeropuerto.idCiudad");
+	$response = $db->getResult();
 		?>
 <!--
 Author: W3layouts
@@ -294,35 +300,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<h3>Aviones</h3>
 					</div>
 					<div class="top-grids">
-						<div class="top-grid">
-							<img src="images/6.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="top-grid">
-							<img src="images/3.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="top-grid">
-							<img src="images/2.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="top-grid">
-							<img src="images/4.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
+						<?php
+						foreach ($response as $value){
+							echo "<div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='".$value['Imagen']."' alt=''><div class='top-grid-info visiting-grid'><h3>".$value['NombreAerolinea']."</h3><p>";
+							//echo $value['NombreAeropuerto']."<br>";
+							echo "<strong>Ciudad: </strong>".$value['NombreCiudad']."<br>";
+							echo "<strong>Categoria: </strong>".$value['NombreCategoria']."<br>";
+							echo "<strong>Porcentaje: </strong>".$value['Porcentaje']."<br>";
+							echo "</p></div></div>";
+						}
+						?>
 					</div>
 				</div>
 				<!-- //container -->
