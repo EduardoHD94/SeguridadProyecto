@@ -7,9 +7,11 @@
 where Aerolinea.idAerolinea = AeroLineaPuerto.idAerolinea and AeroLineaPuerto.idAeropuerto = Aeropuerto.idAeropuerto and Tasa.idTasa = Aeropuerto.idTasa and Categoria.idCategoria = Aeropuerto.idCategoria and Ciudad.idCiudad = Aeropuerto.idCiudad");
 	$response = $db->getResult();
 
-	$json = json_encode($response);	
+//	$out = array_values($response);
+//	$json = json_encode($out);	
 
-	echo $json;
+	var_dump($response);
+
 
 
 /*
@@ -20,5 +22,6 @@ and AeroLineaPuerto.idAeropuerto = Aeropuerto.idAeropuerto
 and Tasa.idTasa = Aeropuerto.idTasa 
 and Categoria.idCategoria = Aeropuerto.idCategoria
 and Ciudad.idCiudad = Aeropuerto.idCiudad 
-order by NombreCiudad;*/
+order by NombreCiudad;
+*/
 ?>

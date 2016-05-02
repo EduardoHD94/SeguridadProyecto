@@ -9,7 +9,11 @@
 where Hotel.Clasificacion = ClasificacionColor.idClasificacionColor and Ciudad.idCiudad = Hotel.idCiudad");
 	$response = $db->getResult();
 
-	$json = json_encode($response);	
+//	print_r($response);
+	
+	$json = json_encode(array_values($response));	
+
+	var_dump($response);
 
 	echo $json;
 
