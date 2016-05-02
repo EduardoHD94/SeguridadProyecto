@@ -17,14 +17,6 @@ AND Puerto.idCiudad = Ciudad.idCiudad AND Puerto.idCategoria = Categoria.idCateg
 	$json = json_encode($response);	
 
 	print($json);
-
-	$json2 = json_decode($json,true);
-
-	echo "<br><br>"+$json2[1]['Stock'];
-	//echo $json2['Stock'];
-
-
-
 /*
 select NombreBarco, Precio, Stock, NombrePuerto, Ciudad.NombreCiudad, Categoria.NombreCategoria, Tasa.Porcentaje from Barco,Puerto,Ciudad, Categoria, Tasa
 where Barco.idPuerto = Puerto.idPuerto 

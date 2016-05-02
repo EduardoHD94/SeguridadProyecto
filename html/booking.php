@@ -54,14 +54,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         				});
         			}
         		});
-        	});
-        	$(function(){
         		$.ajax({
-        			url:"../include/automovil.php",
+        			url:"../include/barcos.php",
         			dataType:"json",
-        			success:function(data){
-        				$.each(data, function(index){
-                            $("#autos").append("<div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='"+data[index].Imagen+"' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreAutomovil+"</h3><p><strong>Precio:</strong> $"+data[index].Precio+"<br><strong>Gama: </strong>"+data[index].Gama+"</p></div></div>")
+        			success:function(data)
+                    {
+        				$.each(data, function(index)
+                        {
+                            $("#barcos").append("<div  style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='http://www.abc.es/Media/201305/16/fortuna-barco--644x362.jpg' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreBarco+"</h3><p><strong>Puerto:</strong> "+data[index].NombrePuerto+"<br><strong>Precio: </strong>$"+data[index].Precio+"<br><strong>Disponibles: </strong>"+data[index].Stock+"<br><strong>Categoria: </strong>"+data[index].NombreCategoria+"<br><strong>Ciudad: </strong>"+data[index].NombreCiudad+"<br><strong>Porcentaje: </strong>"+data[index].Porcentaje+"%</p></div></div>")
+
         				});
         			}
         		});
@@ -332,36 +333,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="visiting-info">
 						<h3>Barcos</h3>
 					</div>
-					<div class="top-grids">
-						<div class="top-grid">
-							<img src="images/6.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="top-grid">
-							<img src="images/3.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="top-grid">
-							<img src="images/2.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="top-grid">
-							<img src="images/4.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
+					<div class="top-grids" id="barcos">
 					</div>
 				</div>
 				<!-- //container -->
