@@ -6,9 +6,10 @@
 
 	$table = "Automovil";
 	$rows = "Automovil.NombreAutomovil, Automovil.Precio, Automovil.Gama, Automovil.Imagen";
+	$limit = "12";
 
 
-	$db->select($table,$rows);
+	$db->select($table,$rows,NULL,NULL,NULL,$limit);
 	$response = $db->getResult();
 
 	//print_r($response);

@@ -10,7 +10,7 @@
 
 	$db->sql("select NombreBarco, Precio, Stock, NombrePuerto, Ciudad.NombreCiudad, Categoria.NombreCategoria, Tasa.Porcentaje from Barco,Puerto,Ciudad, Categoria, Tasa
 where Barco.idPuerto = Puerto.idPuerto 
-AND Puerto.idCiudad = Ciudad.idCiudad AND Puerto.idCategoria = Categoria.idCategoria AND Tasa.idTasa = Puerto.idTasa");
+AND Puerto.idCiudad = Ciudad.idCiudad AND Puerto.idCategoria = Categoria.idCategoria AND Tasa.idTasa = Puerto.idTasa LIMIT 12");
 	$response = $db->getResult();
 
 	//print_r($response);

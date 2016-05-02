@@ -8,11 +8,17 @@ session_start();
 	{
 	include('../include/Conexion.php');
 	$db = new Database();
+	$db2 = new Database();
 	$db->connect();
+	$db2->connect();
 	$db->sql("select Aerolinea.NombreAerolinea ,Aerolinea.Imagen, Aeropuerto.NombreAeropuerto,Tasa.Porcentaje, Ciudad.NombreCiudad, Categoria.NombreCategoria from AeroLineaPuerto,Aerolinea,Aeropuerto,Tasa, Categoria, Ciudad 
-where Aerolinea.idAerolinea = AeroLineaPuerto.idAerolinea and AeroLineaPuerto.idAeropuerto = Aeropuerto.idAeropuerto and Tasa.idTasa = Aeropuerto.idTasa and Categoria.idCategoria = Aeropuerto.idCategoria and Ciudad.idCiudad = Aeropuerto.idCiudad");
+where Aerolinea.idAerolinea = AeroLineaPuerto.idAerolinea and AeroLineaPuerto.idAeropuerto = Aeropuerto.idAeropuerto and Tasa.idTasa = Aeropuerto.idTasa and Categoria.idCategoria = Aeropuerto.idCategoria and Ciudad.idCiudad = Aeropuerto.idCiudad LIMIT 12");
 	$response = $db->getResult();
-		?>
+
+	$db2->sql("select NombreHotel, Imagen, Precio, Habitaciones, ClasificacionColor.NombreClasificacion, NombreCiudad  from Hotel,Ciudad,ClasificacionColor
+where Hotel.Clasificacion = ClasificacionColor.idClasificacionColor and Ciudad.idCiudad = Hotel.idCiudad LIMIT 12");
+	$hoteles = $db2->getResult();
+?>
 <!--
 Author: W3layouts
 Author URL: http://w3layouts.com
@@ -56,7 +62,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         			dataType:"json",
         			success:function(data){
         				$.each(data, function(index){
-                            $("#autos").append("<div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='"+data[index].Imagen+"' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreAutomovil+"</h3><p><strong>Precio:</strong> $"+data[index].Precio+"<br><strong>Gama: </strong>"+data[index].Gama+"</p></div></div>")
+                            $("#autos").append("<form method='post' action='cart.php'><div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='"+data[index].Imagen+"' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreAutomovil+"</h3><p><strong>Precio:</strong> $"+data[index].Precio+"<br><strong>Gama: </strong>"+data[index].Gama+"<center><button type='submit' class='btn btn-warning' role='button'>Agregar al carrito</button></center></p></div></div></form>")
         				});
         			}
         		});
@@ -67,7 +73,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     {
         				$.each(data, function(index)
                         {
-                            $("#barcos").append("<div  style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='http://www.abc.es/Media/201305/16/fortuna-barco--644x362.jpg' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreBarco+"</h3><p><strong>Puerto:</strong> "+data[index].NombrePuerto+"<br><strong>Precio: </strong>$"+data[index].Precio+"<br><strong>Disponibles: </strong>"+data[index].Stock+"<br><strong>Categoria: </strong>"+data[index].NombreCategoria+"<br><strong>Ciudad: </strong>"+data[index].NombreCiudad+"<br><strong>Porcentaje: </strong>"+data[index].Porcentaje+"%</p></div></div>")
+                            $("#barcos").append("<form method='post' action='cart.php'><div  style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='http://www.abc.es/Media/201305/16/fortuna-barco--644x362.jpg' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreBarco+"</h3><p><strong>Puerto:</strong> "+data[index].NombrePuerto+"<br><strong>Precio: </strong>$"+data[index].Precio+"<br><strong>Disponibles: </strong>"+data[index].Stock+"<br><strong>Categoria: </strong>"+data[index].NombreCategoria+"<br><strong>Ciudad: </strong>"+data[index].NombreCiudad+"<br><strong>Porcentaje: </strong>"+data[index].Porcentaje+"%<center><button type='submit' class='btn btn-danger' role='button'>Agregar al carrito</button></center></p></div></div></form>")
 
         				});
         			}
@@ -106,208 +112,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<!-- //container -->
 		</div>
 		<!-- booking -->
-		<div class="booking">
-			<!-- container -->
-			<div class="container">
-				<div class="booking-info">
-					<h3>booking</h3>
-				</div>
-				<div class="booking-form">
-					<!---strat-date-piker---->
-					<link rel="stylesheet" href="css/jquery-ui.css" />
-					<script src="js/jquery-ui.js"></script>
-							  <script>
-									  $(function() {
-										$( "#datepicker,#datepicker1" ).datepicker();
-									  });
-							  </script>
-					<!---/End-date-piker---->
-					<link type="text/css" rel="stylesheet" href="css/JFGrid.css" />
-					<link type="text/css" rel="stylesheet" href="css/JFFormStyle-1.css" />
-					<script type="text/javascript" src="js/JFCore.js"></script>
-					<script type="text/javascript" src="js/JFForms.js"></script>
-					<!-- Set here the key for your domain in order to hide the watermark on the web server -->
-					<script type="text/javascript">
-						(function() {
-							JC.init({
-								domainKey: ''
-							});
-						})();
-					</script>
-					<div class="online_reservation">
-							<div class="b_room">
-								<div class="booking_room">
-									<div class="reservation">
-										<ul>		
-											<li  class="span1_of_1 left">
-												 <h5>From</h5>
-												 <div class="book_date">
-													 <form>
-														<input type="text" placeholder="Type Depature City" required="">
-													 </form>
-												 </div>					
-											 </li>
-											 <li  class="span1_of_1 left">
-												 <h5>To</h5>
-												 <div class="book_date">
-												 <form>
-													<input type="text" placeholder="Type Destination City" required="">
-												 </form>
-												 </div>		
-											 </li>
-											 <li  class="span1_of_1 left">
-												 <h5>Arrival</h5>
-												 <div class="book_date">
-													 <form>
-													 <input class="date" id="datepicker" type="text" value="2/08/2013" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '2/08/2013';}" required=>
-													 </form>
-												 </div>					
-											 </li>
-											 <li  class="span1_of_1 left">
-												 <h5>Depature</h5>
-												 <div class="book_date">
-												 <form>
-													<input class="date" id="datepicker1" type="text" value="22/08/2013" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '22/08/2013';}" required=>
-												 </form>
-												 </div>		
-											 </li>
-											 <li class="span1_of_1">
-												 <h5>Class</h5>
-												 <!----------start section_room----------->
-												 <div class="section_room">
-													  <select id="country" onchange="change_country(this.value)" class="frm-field required">
-															<option value="null">Economy</option>
-															<option value="null">Business</option>         
-															<option value="AX">First Class</option>
-															<option value="AX">Premium Economy</option>
-													  </select>
-												 </div>	
-											 </li>
-											 <li class="span1_of_3">
-													<div class="date_btn">
-														<form>
-															<input type="submit" value="Find Flight" />
-														</form>
-													</div>
-											 </li>
-											 <div class="clearfix"></div>
-										</ul>
-									 </div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-					</div>
-					<!---->
-				</div>
-				<div class="clearfix"></div>
-				<div class="booking-grids">
-					<h3>WE ARE PROVIDE</h3>
-					<div class="col-md-7 booking-grid-left">
-						<h4>QUISQUE LECTUS IPSUM, FERMENTUM EU SODALES NON, AUCTOR IN MAURIS. NULLA PRETIUM CURSUS NULLA, AC RUTRUM MAGNA LAOREET EU.</h4>
-						<p>Maecenas ultricies molestie efficitur. Maecenas bibendum tincidunt nulla at scelerisque. Fusce sodales nibh ex. Proin vel commodo neque. In congue neque ac venenatis aliquam. Sed vestibulum cursus velit faucibus tempor. Maecenas posuere pellentesque erat, vel auctor mauris fringilla ac. Proin euismod orci nec felis efficitur, a pulvinar nisl viverra. Etiam eu finibus ipsum, id molestie nunc</p>
-						<p>Maecenas ultricies molestie efficitur. Maecenas bibendum tincidunt nulla at scelerisque. Fusce sodales nibh ex. Proin vel commodo neque. In congue neque ac venenatis aliquam.Maecenas bibendum tincidunt nulla at scelerisque.</p>
-						<div class="read-more red">
-							<a href="#">Read More >></a>
-						</div>
-					</div>
-					<div class="col-md-5 booking-grid-right">
-						<img src="images/11.jpg" alt="">
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-			</div>
-			<!-- //container -->
-			<div class="how-to">
-				<!-- container -->
-				<div class="container">
-					<div class="how-to-info">
-						<h3>HOW TO BOOK</h3>
-						<h4>Quisque lectus ipsum, fermentum eu sodales non, auctor in mauris. Nulla pretium cursus nulla, ac rutrum magna laoreet eu.
-							Phasellus vel est vel odio finibus lacinia. Donec a diam dictum, elementum ipsum et, pulvina
-						</h4>
-						<p>Duis vulputate auctor libero, eget viverra ante dapibus sit amet. Vestibulum auctor pellentesque enim, 
-						sed ornare metus vehicula eu. Etiam rhoncus eu urna ac feugiat. Praesent sed tempor urna, laoreet dignissim est. 
-						Aenean nec justo vitae arcu consequat lobortis. Sed iaculis et dui eu sollicitudin. Morbi id felis porttitor tellus 
-						viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam cursus 
-						leo nec enim vulputate finibus. Nulla at dui non nisi molestie posuere non sed ante. 
-						Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.Nulla at dui non nisi molestie posuere non sed ante. </p>
-					</div>
-					<div class="how-grids">
-						<div class="col-md-4 how-grid">
-							<span>1</span>
-							<a href="#">LOREM IPSUM DOLOR SIT</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat.</p>
-						</div>
-						<div class="col-md-4 how-grid">
-							<span>2</span>
-							<a href="#">LOREM IPSUM DOLOR SIT</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat.</p>
-						</div>
-						<div class="col-md-4 how-grid">
-							<span>3</span>
-							<a href="#">LOREM IPSUM DOLOR SIT</a>
-							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat.</p>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				</div>
-				<!-- //container -->
-			</div>
+		<div class="booking">			
 			<div class="visiting">
 				<!-- container -->
 				<div class="container">
-					<div class="visiting-info">
+					<div class="booking-info">
 						<h3>Hoteles</h3>
 					</div>
 					<div class="top-grids">
-						<div class="top-grid">
-							<img src="images/6.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="top-grid">
-							<img src="images/3.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="top-grid">
-							<img src="images/2.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="top-grid">
-							<img src="images/4.jpg" alt="">
-							<div class="top-grid-info visiting-grid">
-								<h3>Vestibulum auctor</h3>
-								<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				</div>
-				<!-- //container -->
-			</div>
-			<div class="visiting">
-				<!-- container -->
-				<div class="container">
-					<div class="visiting-info">
-						<h3>Aviones</h3>
-					</div>
-					<div class="top-grids">
-						<?php
-						foreach ($response as $value){
-							echo "<div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='".$value['Imagen']."' alt=''><div class='top-grid-info visiting-grid'><h3>".$value['NombreAerolinea']."</h3><p>";
-							//echo $value['NombreAeropuerto']."<br>";
-							echo "<strong>Ciudad: </strong>".$value['NombreCiudad']."<br>";
-							echo "<strong>Categoria: </strong>".$value['NombreCategoria']."<br>";
-							echo "<strong>Porcentaje: </strong>".$value['Porcentaje']."<br>";
-							echo "</p></div></div>";
+					<?php
+						foreach ($hoteles as $value)
+						{
+						echo "<form method='post' action='cart.php'>";
+						echo "<div style='float:left;width: none;'  class='top-grid'>";
+						echo "<img style='width:250px;height:150px;' src='".$value['Imagen']."' alt=''>";
+						echo "<div class='top-grid-info visiting-grid'>";
+						echo "<h3>".$value['NombreHotel']."</h3>";
+						echo "<p>";
+						echo "<strong>Ciudad: </strong>".$value['NombreCiudad']."<br>";
+						echo "<strong>Habitaciones: </strong>".$value['Habitaciones']."<br>";
+						echo "<strong>Precio: </strong>$".$value['Precio']."<br>";
+						echo "<strong>Clasificación: </strong>".$value['NombreClasificacion']."<br>";
+						echo "<center><button type='submit' class='btn btn-info' role='button'>Agregar al carrito</button></center>";
+						echo "</p></div></div>";
+						echo "</form>";
 						}
 						?>
 					</div>
@@ -317,7 +145,31 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="visiting">
 				<!-- container -->
 				<div class="container">
-					<div class="visiting-info">
+					<div class="booking-info">
+						<h3>Aviones</h3>
+					</div>
+					<div class="top-grids">
+						<?php
+						foreach ($response as $value){
+							echo "<form method='post' action='cart.php'>";
+							echo "<div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='".$value['Imagen']."' alt=''><div class='top-grid-info visiting-grid'><h3>".$value['NombreAerolinea']."</h3><p>";
+							//echo $value['NombreAeropuerto']."<br>";
+							echo "<strong>Ciudad: </strong>".$value['NombreCiudad']."<br>";
+							echo "<strong>Categoria: </strong>".$value['NombreCategoria']."<br>";
+							echo "<strong>Porcentaje: </strong>".$value['Porcentaje']."<br>";
+							echo "<center><button type='submit' class='btn btn-success' role='button'>Agregar al carrito</button></center>";
+							echo "</p></div></div>";
+							echo "</form>";
+						}
+						?>
+					</div>
+				</div>
+				<!-- //container -->
+			</div>
+			<div class="visiting">
+				<!-- container -->
+				<div class="container">
+					<div class="booking-info">
 						<h3>Barcos</h3>
 					</div>
 					<div class="top-grids" id="barcos">
@@ -328,7 +180,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="visiting">
 				<!-- container -->
 				<div class="container">
-					<div class="visiting-info">
+					<div class="booking-info">
 						<h3>Autos</h3>
 					</div>
 					<div class="top-grids" id="autos">
