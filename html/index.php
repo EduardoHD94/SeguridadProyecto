@@ -1,10 +1,6 @@
 <?php 
 session_start(); 
 if(empty($_SESSION['idUsuario'])){
-}else{
-	header('Location: inicio.php');
-
-}
 ?>
 <!--
 Author: W3layouts
@@ -95,6 +91,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<!--//End-slider-script -->
 					<div  id="top" class="callbacks_container">
 						<div class="col-md-6 col-md-offset-3 well" style="margin-top: 30px; background-color:rgba(255,255,255,0.4); border: none;">
+						<?php
+						if (isset($_GET['loggin'])){
+					    	if($_GET['loggin'] ==-1 ){
+								echo "<div class='alert alert-danger'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><p><strong>Usuario o contraseña invalidos o hay una sesion activa</strong></p></div>";
+					    	}
+					    }
+						?>
 							<center><h1>Ingresa aquí</h1></center><br>
 							<form action="../include/login.php" target="_self" method="post">
 							  <div class="form-group">
@@ -133,3 +136,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- content-Get-in-touch -->
 	</body>
 </html>
+<?php
+	}else{
+		header('Location: inicio.php');
+	}
+?>
