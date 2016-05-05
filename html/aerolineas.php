@@ -18,9 +18,8 @@ session_start();
         $current_url = urlencode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 	$db = new Database();
 	$db->connect();
-	$db->sql("select Aerolinea.NombreAerolinea, Aerolinea.idAerolinea, Aerolinea.Imagen, Aeropuerto.NombreAeropuerto, Tasa.Porcentaje, AeroLineaPuerto.Precio, AeroLineaPuerto.Stock, Ciudad.NombreCiudad, Categoria.NombreCategoria from AeroLineaPuerto,Aerolinea,Aeropuerto,Tasa, Categoria, Ciudad where Aerolinea.idAerolinea = AeroLineaPuerto.idAerolinea and AeroLineaPuerto.idAeropuerto = Aeropuerto.idAeropuerto and Tasa.idTasa = Aeropuerto.idTasa and Categoria.idCategoria = Aeropuerto.idCategoria and Ciudad.idCiudad = Aeropuerto.idCiudad LIMIT 12");
+	$db->sql("select Aerolinea.NombreAerolinea, Aerolinea.idAerolinea, Aerolinea.Imagen, Aeropuerto.NombreAeropuerto, Tasa.Porcentaje, AeroLineaPuerto.idAeroLineaPuerto, Aeropuerto.idAeropuerto, AeroLineaPuerto.Precio, AeroLineaPuerto.Stock, Ciudad.NombreCiudad, Categoria.NombreCategoria from AeroLineaPuerto,Aerolinea,Aeropuerto,Tasa, Categoria, Ciudad where Aerolinea.idAerolinea = AeroLineaPuerto.idAerolinea and AeroLineaPuerto.idAeropuerto = Aeropuerto.idAeropuerto and Tasa.idTasa = Aeropuerto.idTasa and Categoria.idCategoria = Aeropuerto.idCategoria and Ciudad.idCiudad = Aeropuerto.idCiudad LIMIT 12");
 	$response = $db->getResult();
-        print_r($response[2]);
 ?>
 <!--
 Author: W3layouts
@@ -117,7 +116,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							echo "<strong>Categoria: </strong>".$value['NombreCategoria']."<br>";
 							echo "<strong>Porcentaje: </strong>".$value['Porcentaje']."<br></p>";
 						    echo "<p>
-                            <input type='hidden' value='".$value['idAerolinea']."' name = 'id'><input type='hidden' name='type' value='Aerolinea' /><input type='hidden' name='product_qty' value='1' /><input type='hidden' name='return_url' value='$current_url' />
+                            <input type='hidden' value='".$value['idAeroLineaPuerto']."' name = 'id'>
+                            <input type='hidden' name='type' value='Aerolinea' /><input type='hidden' name='product_qty' value='1' /><input type='hidden' name='return_url' value='$current_url' />
                             <center><button type='submit' class='btn btn-info' role='button'>Agregar al carrito</button></center>";
 							echo "</p></div></div>";
 							echo "</form>";

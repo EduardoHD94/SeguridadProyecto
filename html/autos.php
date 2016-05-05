@@ -71,19 +71,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         			dataType:"json",
         			success:function(data){
         				$.each(data, function(index){
-                            $("#autos").append("<form method='post' action='cart.php'><div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='"+data[index].Imagen+"' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreAutomovil+"</h3><p><strong>Precio:</strong> $"+data[index].Precio+"<br><strong>Gama: </strong>"+data[index].Gama+"<center><button type='submit' class='btn btn-warning' role='button'>Agregar al carrito</button></center></p></div></div></form>")
-        				});
-        			}
-        		});
-        		$.ajax({
-        			url:"../include/barcos.php",
-        			dataType:"json",
-        			success:function(data)
-                    {
-        				$.each(data, function(index)
-                        {
-                            $("#barcos").append("<form method='post' action='cart.php'><div  style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='http://www.abc.es/Media/201305/16/fortuna-barco--644x362.jpg' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreBarco+"</h3><p><strong>Puerto:</strong> "+data[index].NombrePuerto+"<br><strong>Precio: </strong>$"+data[index].Precio+"<br><strong>Disponibles: </strong>"+data[index].Stock+"<br><strong>Categoria: </strong>"+data[index].NombreCategoria+"<br><strong>Ciudad: </strong>"+data[index].NombreCiudad+"<br><strong>Porcentaje: </strong>"+data[index].Porcentaje+"%<center><button type='submit' class='btn btn-danger' role='button'>Agregar al carrito</button></center></p></div></div></form>")
-
+                            $("#autos").append("<form method='post' action='../include/cart.php'><div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='"+data[index].Imagen+"' alt=''><div class='top-grid-info visiting-grid'><h3>"+data[index].NombreAutomovil+"</h3><p><strong>Precio:</strong> $"+data[index].Precio+"<br><strong>Gama: </strong>"+data[index].Gama+"</p><p><input type='hidden' value='"+data[index].idAutomovil+"' name = 'id'><input type='hidden' name='type' value='Autos' /><input type='hidden' name='product_qty' value='1' /><input type='hidden' name='return_url' value='$current_url' /><center><button type='submit' class='btn btn-info' role='button'>Agregar al carrito</button></center></p></div></div></form>")
         				});
         			}
         		});

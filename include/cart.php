@@ -33,22 +33,47 @@
                     $_SESSION["cart_products"][$new_product['id']] = $new_product; //update or create product session with new item  
                 break;
             case 'Aerolinea':
-                    $db->sql("select Aerolinea.NombreAerolinea, Aerolinea.idAerolinea, Aerolinea.Imagen, 
-                    Aeropuerto.NombreAeropuerto, Tasa.Porcentaje, Ciudad.NombreCiudad, Categoria.NombreCategoria, AeroLineaPuerto.Precio, AeroLineaPuerto.Stock
-                    
-                    from AeroLineaPuerto,Aerolinea,Aeropuerto,Tasa, Categoria, Ciudad 
-where 
-Aerolinea.idAerolinea = AeroLineaPuerto.idAerolinea and 
-AeroLineaPuerto.idAeropuerto = Aeropuerto.idAeropuerto and 
-Tasa.idTasa = Aeropuerto.idTasa and 
-Categoria.idCategoria = Aeropuerto.idCategoria and 
-Ciudad.idCiudad = Aeropuerto.idCiudad");
+                    $db->sql("select Aerolinea.NombreAerolinea, Aerolinea.Imagen, AeroLineaPuerto.idAeroLineaPuerto, AeroLineaPuerto.idAeropuerto, AeroLineaPuerto.idAerolinea, AeroLineaPuerto.Stock, AeroLineaPuerto.Precio from AeroLineaPuerto, Aerolinea where Aerolinea.idAerolinea = AeroLineaPuerto.idAerolinea and AeroLineaPuerto.idAeroLineaPuerto = ". $new_product['id']."");
                     $response = $db->getResult();
-
+                
                         //fetch product name, price from db and add to new_product array
-                    $new_product["product_name"] = $response[0]['NombreHotel']; 
+                    $new_product["product_name"] = $response[0]['NombreAerolinea']; 
+                    $new_product["imagen"] = $response[0]['Imagen'];
                     $new_product["product_price"] = $response[0]['Precio'];
-                    $new_product["imagen"] = $response[0]['imagen'];
+
+
+                    if(isset($_SESSION["cart_products"])){  //if session var already exist
+                      if(isset($_SESSION["cart_products"][$new_product['id']])) //check item exist in products array
+                      {
+                        unset($_SESSION["cart_products"][$new_product['id']]); //unset old array item
+                      }           
+                    }
+                    $_SESSION["cart_products"][$new_product['id']] = $new_product; //update or create product session with new item  
+                break;
+            case 'Autos':
+                    $db->sql("SELECT * FROM Automovil WHERE idAutomovil = ". $new_product['id']."");
+                    $response = $db->getResult();
+                    
+                    $new_product["product_name"] = $response[0]['NombreAutomovil']; 
+                    $new_product["imagen"] = $response[0]['Imagen'];
+                    $new_product["product_price"] = $response[0]['Precio'];
+
+
+                    if(isset($_SESSION["cart_products"])){  //if session var already exist
+                      if(isset($_SESSION["cart_products"][$new_product['id']])) //check item exist in products array
+                      {
+                        unset($_SESSION["cart_products"][$new_product['id']]); //unset old array item
+                      }           
+                    }
+                    $_SESSION["cart_products"][$new_product['id']] = $new_product; //update or create product session with new item  
+                break;
+            case 'Barco':
+                    $db->sql("SELECT * FROM Barco WHERE idBarco = ". $new_product['id']."");
+                    $response = $db->getResult();
+                    
+                    $new_product["product_name"] = $response[0]['NombreBarco']; 
+                    $new_product["imagen"] = "http://www.abc.es/Media/201305/16/fortuna-barco--644x362.jpg";
+                    $new_product["product_price"] = $response[0]['Precio'];
 
 
                     if(isset($_SESSION["cart_products"])){  //if session var already exist
@@ -98,7 +123,7 @@ Ciudad.idCiudad = Aeropuerto.idCiudad");
 	
 
 	//back to return url
-	//$return_url = (isset($_POST["return_url"]))?urldecode($_POST["return_url"]):''; //return url
-	//header('Location:'.$return_url);
+	$return_url = (isset($_POST["return_url"]))?urldecode($_POST["return_url"]):''; //return url
+	header('Location:'.$return_url);
 
 ?>

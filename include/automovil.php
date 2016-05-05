@@ -5,7 +5,7 @@
 	$db->connect();
 
 	$table = "Automovil";
-	$rows = "Automovil.NombreAutomovil, Automovil.Precio, Automovil.Gama, Automovil.Imagen";
+	$rows = "Automovil.idAutomovil, Automovil.NombreAutomovil, Automovil.Precio, Automovil.Gama, Automovil.Imagen";
 	$limit = "12";
 
 

@@ -139,18 +139,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						$subtotal = 0;
 						
 						echo "<form method='post' action='../include/cart.php'>";
-						
-						foreach ($_SESSION["cart_products"] as $cart_itm){
-						
-							$product_name = $cart_itm["product_name"];
-							$product_qty = $cart_itm["product_qty"];
-							$product_price = $cart_itm["product_price"];
-                            $tipo = $cart_itm["type"];
-							$id = $cart_itm["id"];
-                            $imagen = $cart_itm["imagen"];
-							
-							print "
-                            <div class='row'>
+						print "<div class='row'>
                                         <div class='col-md-12'>
                                             <center><h1>Mis reservaciones</h1></center><br>
                                             <div class='table-responsive'>
@@ -164,7 +153,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                                         <th>Cantidad</th>
                                                         <th>Eliminar</th>
                                                     </tr>
-                                                </thead>
+                                                </thead>";
+						foreach ($_SESSION["cart_products"] as $cart_itm){
+						
+							$product_name = $cart_itm["product_name"];
+							$product_qty = $cart_itm["product_qty"];
+							$product_price = $cart_itm["product_price"];
+                            $tipo = $cart_itm["type"];
+							$id = $cart_itm["id"];
+                            $imagen = $cart_itm["imagen"];
+							
+							print "
                                                   <tr>
                                                       <td><img width='50px' src=".$imagen." class='img-responsive img-rounded' alt=''></td>
                                                       <td>".$tipo."</td>
@@ -176,17 +175,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                                             <span class='glyphicon glyphicon-trash' aria-hidden='true'></span>
                                                         </div></td>
                                                   </tr>
+							";
+							$subtotal = $product_price * $product_qty;
+							$total = $total + $subtotal;
+						}
+                        print "
                                                 <tbody>
                                                 </tbody>
                                               </table>
                                             </div>
                                         </div>
                                     </div>
-								<hr>
-							";
-							$subtotal = $product_price * $product_qty;
-							$total = $total + $subtotal;
-						}
+								<hr>";
 						echo "<center><h4>Total = $".$total."</h4></center>";
 						echo "<input type='hidden' name='return_url' value='".$current_url."' />";
 						echo "<center><button type='submit' class='btn btn-primary'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span> Actualizar Carrito</button></center>";
