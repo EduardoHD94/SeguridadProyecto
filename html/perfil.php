@@ -6,6 +6,14 @@ session_start();
 	}
 	else
 	{
+        function numeroProductos(){
+			$i = 0;
+			if(isset($_SESSION["cart_products"]))
+				foreach($_SESSION["cart_products"] as $c){
+					$i = $i + $c["product_qty"];
+				}  
+			return $i;
+		}
 		?>
 <!--
 Author: W3layouts
@@ -25,7 +33,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 		<!-- web-font -->
 		<!-- js -->
-		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script src="js/modernizr.custom.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -83,7 +92,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<span class="menu"><img src="images/menu.png" alt=""></span>
 							<ul class="cl-effect-1">
 								<li><a href="index.php">Inicio</a></li>
-								<li><a href="booking.php">Reservaciones</a></li>
+								<li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Servicios <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="aerolineas.php">aerolineas</a></li>
+                                        <li><a href="barcos.php">barcos</a></li>
+                                        <li><a href="autos.php">Autos</a></li>
+                                        <li><a href="hoteles.php">Hoteles</a></li>
+                                    </ul>
+                                </li>
+								<li><a href="booking.php">mis reservaciones <span class='badge bg-primary'><?php echo numeroProductos();?></span></a></li>
 								<li><a href="perfil.php"><?php echo $_SESSION["Usuario"];?></a></li>  
 								<li><a href="../include/cerrarSesion.php">Cerrar Sesión</a></li>
 							</ul>
@@ -160,7 +178,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="footer-nav">
 						<ul>
 								<li><a href="inicio.html">Inicio</a></li>
-								<li><a href="booking.html">Reservaciones</a></li>
+								<li><a href="booking.php">mis reservaciones</a></li>
 								<li><a href="perfil.php"><?php echo $_SESSION["Usuario"];?></a></li>  
 								<li><a href="../include/cerrarSesion.php">Cerrar Sesión</a></li>
 						</ul>

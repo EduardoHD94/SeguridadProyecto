@@ -6,6 +6,14 @@ session_start();
 	}
 	else
 	{
+        function numeroProductos(){
+			$i = 0;
+			if(isset($_SESSION["cart_products"]))
+				foreach($_SESSION["cart_products"] as $c){
+					$i = $i + $c["product_qty"];
+				}  
+			return $i;
+		}
 		?>
 <!--
 Author: W3layouts
@@ -24,14 +32,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
 		<!-- web-font -->
-		<!-- js -->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/modernizr.custom.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <!-- js -->
+		<script src="js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script src="js/modernizr.custom.js"></script>
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 		<!-- js -->
 		<script src="js/modernizr.custom.js"></script>
-		<!-- start-smoth-scrolling -->
+        <!-- start-smoth-scrolling -->
 		<script type="text/javascript" src="js/move-top.js"></script>
 		<script type="text/javascript" src="js/easing.js"></script>
 		<script type="text/javascript">
@@ -57,7 +66,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<span class="menu"><img src="images/menu.png" alt=""></span>
 							<ul class="cl-effect-1">
 								<li><a href="index.php">Inicio</a></li>
-								<li><a href="booking.php">Reservaciones</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Servicios <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="aerolineas.php">aerolineas</a></li>
+                                        <li><a href="barcos.php">barcos</a></li>
+                                        <li><a href="autos.php">Autos</a></li>
+                                        <li><a href="hoteles.php">Hoteles</a></li>
+                                    </ul>
+                                </li>
+								<li><a href="booking.php">mis reservaciones <span class='badge bg-primary'><?php echo numeroProductos();?></span></a></li>
 								<li><a href="perfil.php"><?php echo $_SESSION["Usuario"];?></a></li>  
 								<li><a href="../include/cerrarSesion.php">Cerrar Sesión</a></li>
 							</ul>
@@ -127,86 +145,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<!-- container -->
 		</div>
 		<!-- //header -->
-		<!-- banner-grids -->
-		<div class="banner-grids">
-			<!-- container -->
-			<div class="container">
-				<div class="banner-grid-info">
-					<h3>TOP DESTINATIONS</h3>
-					<p>Pellentesque tempor sem in scelerisque mollis.</p>
-				</div>
-				<div class="top-grids">
-					<div class="top-grid">
-						<img src="images/6.jpg" alt="" />
-						<div class="top-grid-info">
-							<h3>Vestibulum auctor</h3>
-							<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-						</div>
-					</div>
-					<div class="top-grid">
-						<img src="images/3.jpg" alt="" />
-						<div class="top-grid-info">
-							<h3>Vestibulum auctor</h3>
-							<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-						</div>
-					</div>
-					<div class="top-grid">
-						<img src="images/2.jpg" alt="" />
-						<div class="top-grid-info">
-							<h3>Vestibulum auctor</h3>
-							<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-						</div>
-					</div>
-					<div class="top-grid">
-						<img src="images/4.jpg" alt="" />
-						<div class="top-grid-info">
-							<h3>Vestibulum auctor</h3>
-							<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices .</p>
-						</div>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-			</div>
-			<!-- //container -->
-		</div>
-		<!-- //banner-grids -->
-		<!-- before -->
-		<div class="before">
-			<!-- container -->
-			<div class="container">
-				<h2>Before you leave</h2>
-				<div class="before-grids">
-					<div class="before-grid">
-						<h3>visa & documents</h3>
-						<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
-							Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
-						</p>
-					</div>
-					<div class="before-grid">
-						<h3>visa & documents</h3>
-						<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
-							Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
-						</p>
-					</div>
-					<div class="before-grid">
-						<h3>visa & documents</h3>
-						<p>Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
-							Morbi id felis porttitor tellus viverra pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.
-						</p>
-					</div>
-					<div class="clearfix"> </div>
-					<div class="search">
-						<p>get hottest deals to your inbox</p>
-						<form>
-							<input type="text" placeholder="Email address" required="">
-							<input type="submit" value="Subscribe">
-						</form>
-					</div>
-				</div>
-			</div>
-			<!-- //container -->
-		</div>
-		<!-- //before -->
 		<!-- footer -->
 		<div class="footer">
 			<!-- container -->
@@ -218,7 +156,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="footer-nav">
 						<ul>
 								<li><a href="index.html">Inicio</a></li>
-								<li><a href="booking.html">Reservaciones</a></li>
+								<li><a href="booking.php">mis reservaciones</a></li>
 								<li><a href="perfil.php"><?php echo $_SESSION["Usuario"];?></a></li>  
 								<li><a href="../include/cerrarSesion.php">Cerrar Sesión</a></li>
 						</ul>

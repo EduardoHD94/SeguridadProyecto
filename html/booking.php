@@ -7,6 +7,15 @@ session_start();
 	else
 	{
 	include('../include/Conexion.php');
+        function numeroProductos(){
+			$i = 0;
+			if(isset($_SESSION["cart_products"]))
+				foreach($_SESSION["cart_products"] as $c){
+					$i = $i + $c["product_qty"];
+				}  
+			return $i;
+		}
+    $current_url = urlencode($url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 	$db = new Database();
 	$db2 = new Database();
 	$db->connect();
@@ -37,7 +46,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 		<!-- web-font -->
 		<!-- js -->
-		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script src="js/modernizr.custom.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -93,7 +103,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<span class="menu"><img src="images/menu.png" alt=""></span>
 							<ul class="cl-effect-1">
 								<li><a href="index.php">Inicio</a></li>
-								<li><a href="booking.php">Reservaciones</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Servicios <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="aerolineas.php">aerolineas</a></li>
+                                        <li><a href="barcos.php">barcos</a></li>
+                                        <li><a href="autos.php">Autos</a></li>
+                                        <li><a href="hoteles.php">Hoteles</a></li>
+                                    </ul>
+                                </li>
+								<li><a href="booking.php">mis reservaciones <span class='badge bg-primary'><?php echo numeroProductos();?></span></a></li>
 								<li><a href="perfil.php"><?php echo $_SESSION["Usuario"];?></a></li>  
 								<li><a href="../include/cerrarSesion.php">Cerrar Sesión</a></li>
 							</ul>
@@ -112,85 +131,76 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<!-- //container -->
 		</div>
 		<!-- booking -->
-		<div class="booking">			
-			<div class="visiting">
-				<!-- container -->
-				<div class="container">
-					<div class="booking-info">
-						<h3>Hoteles</h3>
-					</div>
-					<div class="top-grids">
-					<?php
-						foreach ($hoteles as $value)
-						{
-						echo "<form method='post' action='cart.php'>";
-						echo "<div style='float:left;width: none;'  class='top-grid'>";
-						echo "<img style='width:250px;height:150px;' src='".$value['Imagen']."' alt=''>";
-						echo "<div class='top-grid-info visiting-grid'>";
-						echo "<h3>".$value['NombreHotel']."</h3>";
-						echo "<p>";
-						echo "<strong>Ciudad: </strong>".$value['NombreCiudad']."<br>";
-						echo "<strong>Habitaciones: </strong>".$value['Habitaciones']."<br>";
-						echo "<strong>Precio: </strong>$".$value['Precio']."<br>";
-						echo "<strong>Clasificación: </strong>".$value['NombreClasificacion']."<br>";
-						echo "<center><button type='submit' class='btn btn-info' role='button'>Agregar al carrito</button></center>";
-						echo "</p></div></div>";
-						echo "</form>";
-						}
-						?>
-					</div>
-				</div>
-				<!-- //container -->
-			</div>
-			<div class="visiting">
-				<!-- container -->
-				<div class="container">
-					<div class="booking-info">
-						<h3>Aviones</h3>
-					</div>
-					<div class="top-grids">
-						<?php
-						foreach ($response as $value){
-							echo "<form method='post' action='cart.php'>";
-							echo "<div style='float:left;width: none;' class='top-grid'><img style='width:250px;height:150px;' src='".$value['Imagen']."' alt=''><div class='top-grid-info visiting-grid'><h3>".$value['NombreAerolinea']."</h3><p>";
-							//echo $value['NombreAeropuerto']."<br>";
-							echo "<strong>Ciudad: </strong>".$value['NombreCiudad']."<br>";
-							echo "<strong>Categoria: </strong>".$value['NombreCategoria']."<br>";
-							echo "<strong>Porcentaje: </strong>".$value['Porcentaje']."<br>";
-							echo "<center><button type='submit' class='btn btn-success' role='button'>Agregar al carrito</button></center>";
-							echo "</p></div></div>";
-							echo "</form>";
-						}
-						?>
-					</div>
-				</div>
-				<!-- //container -->
-			</div>
-			<div class="visiting">
-				<!-- container -->
-				<div class="container">
-					<div class="booking-info">
-						<h3>Barcos</h3>
-					</div>
-					<div class="top-grids" id="barcos">
-					</div>
-				</div>
-				<!-- //container -->
-			</div>
-			<div class="visiting">
-				<!-- container -->
-				<div class="container">
-					<div class="booking-info">
-						<h3>Autos</h3>
-					</div>
-					<div class="top-grids" id="autos">
+            <div class="container">
+				<?php
+					if(isset($_SESSION["cart_products"]) && count($_SESSION["cart_products"])>0){
+						$button = true;
+						$total =0;
+						$subtotal = 0;
 						
-					</div>
-				</div>
-				<!-- //container -->
-			</div>
-		</div>
-		<!-- booking -->
+						echo "<form method='post' action='../include/cart.php'>";
+						
+						foreach ($_SESSION["cart_products"] as $cart_itm){
+						
+							$product_name = $cart_itm["product_name"];
+							$product_qty = $cart_itm["product_qty"];
+							$product_price = $cart_itm["product_price"];
+                            $tipo = $cart_itm["type"];
+							$id = $cart_itm["id"];
+                            $imagen = $cart_itm["imagen"];
+							
+							print "
+                            <div class='row'>
+                                        <div class='col-md-12'>
+                                            <center><h1>Mis reservaciones</h1></center><br>
+                                            <div class='table-responsive'>
+                                              <table class='table'>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Imagen</th>
+                                                        <th>Servicio</th>
+                                                        <th>Titulo</th>
+                                                        <th>Precio</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Eliminar</th>
+                                                    </tr>
+                                                </thead>
+                                                  <tr>
+                                                      <td><img width='50px' src=".$imagen." class='img-responsive img-rounded' alt=''></td>
+                                                      <td>".$tipo."</td>
+                                                      <td>". $product_name ."</td>
+                                                      <td>$". $product_price ."</td>
+                                                      <td><input type='text' class = 'form-control' size='2' maxlength='2' name='product_qty[".$id."]'  onkeypress='return validar(event)' value='".$product_qty."' /></td>
+                                                      <td><div class='alert alert-danger' role='alert'>
+                                                            <input type='checkbox' name='remove_code[]' value='".$id."' />
+                                                            <span class='glyphicon glyphicon-trash' aria-hidden='true'></span>
+                                                        </div></td>
+                                                  </tr>
+                                                <tbody>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                        </div>
+                                    </div>
+								<hr>
+							";
+							$subtotal = $product_price * $product_qty;
+							$total = $total + $subtotal;
+						}
+						echo "<center><h4>Total = $".$total."</h4></center>";
+						echo "<input type='hidden' name='return_url' value='".$current_url."' />";
+						echo "<center><button type='submit' class='btn btn-primary'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span> Actualizar Carrito</button></center>";
+						
+						echo "</form>";
+					}
+					else{
+						print "
+                        <div class='row'><div class='col-md-12'><h2><center>No hay productos en el carrito.</center></h2></div></div>";
+						$button = false;
+					}
+				?>
+            </div>
+        <div style="margin:100px;"></div>
 		<!-- footer -->
 		<div class="footer">
 			<!-- container -->
@@ -202,7 +212,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="footer-nav">
 						<ul>
 							<li><a href="index.php">Inicio</a></li>
-							<li><a href="booking.php">Reservaciones</a></li>
+							<li><a href="booking.php">mis reservaciones</a></li>
 							<li><a href="perfil.php"><?php echo $_SESSION["Usuario"];?></a></li>  
 							<li><a href="../include/cerrarSesion.php">Cerrar Sesión</a></li>
 						</ul>
